@@ -1,0 +1,11 @@
+{
+  "name": "mygrades-app",
+  "version": "1.0.0",
+  "displayName": "MyGrades App",
+  "cordova": {
+    "platforms": [
+      "android"
+    ]
+  },
+  "dependencies": {}
+}

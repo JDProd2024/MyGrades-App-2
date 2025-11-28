@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyGrades - Calculateur</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="splash">
+        <div class="splash-logo">📊</div>
+        <div class="splash-title">MyGrades</div>
+        <div class="splash-subtitle">Calculateur de Moyenne</div>
+        <div class="loader"></div>
+        <div class="splash-footer">Dev by <strong>JD Technology</strong></div>
+    </div>
+    
+    <div id="app">
+        <div class="app-header">
+            <div class="header-content">
+                <div class="app-title">
+                    <span>📊</span>
+                    <span>MyGrades</span>
+                </div>
+                <div class="app-subtitle">Calculez vos moyennes facilement</div>
+            </div>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('config')">⚙️ Configuration</button>
+            <button class="tab" onclick="switchTab('notes')">📝 Notes</button>
+            <button class="tab" onclick="switchTab('results')">📈 Résultats</button>
+        </div>
+        
+        <div class="content">
+            <div class="tab-content active" id="config-tab">
+                <div class="dispense-card">
+                    <div class="dispense-title">Informations Personnelles</div>
+                    <div style="margin-bottom: 15px;">
+                        <label class="note-label" style="color: #10b981; margin-bottom: 8px; display: block;">NOM</label>
+                        <input type="text" id="nom" placeholder="Votre nom" style="width: 100%; padding: 12px; background: #0a0a0a; border: 2px solid #3a3a3a; border-radius: 10px; color: white; font-size: 16px;">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label class="note-label" style="color: #10b981; margin-bottom: 8px; display: block;">PRÉNOM</label>
+                        <input type="text" id="prenom" placeholder="Votre prénom" style="width: 100%; padding: 12px; background: #0a0a0a; border: 2px solid #3a3a3a; border-radius: 10px; color: white; font-size: 16px;">
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <label class="note-label" style="color: #10b981; margin-bottom: 8px; display: block;">CLASSE</label>
+                        <select id="classe" style="width: 100%; padding: 12px; background: #0a0a0a; border: 2px solid #3a3a3a; border-radius: 10px; color: white; font-size: 16px;">
+                            <option value="">-- Sélectionnez votre classe --</option>
+                            <optgroup label="Collège">
+                                <option value="6e">6ème</option>
+                                <option value="5e">5ème</option>
+                                <option value="4e">4ème</option>
+                                <option value="3e">3ème</option>
+                            </optgroup>
+                            <optgroup label="Série Littéraire">
+                                <option value="2nde-A">2nde A</option>
+                                <option value="1ere-A">1ère A</option>
+                                <option value="Tle-A">Tle A</option>
+                            </optgroup>
+                            <optgroup label="Série Scientifique">
+                                <option value="2nde-C">2nde C</option>
+                                <option value="1ere-D">1ère D</option>
+                                <option value="Tle-D">Tle D</option>
+                            </optgroup>
+                            <optgroup label="Série Technique">
+                                <option value="2nde-C-prime">2nde C'</option>
+                                <option value="1ere-D-prime">1ère D'</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="dispense-card">
+                    <div class="dispense-title">Suivez-vous les matières techniques ?</div>
+                    <div class="dispense-btns">
+                        <button class="dispense-btn" id="btnNonTechnique">Non</button>
+                        <button class="dispense-btn active" id="btnOuiTechnique">Oui</button>
+                    </div>
+                </div>
+                
+                <div class="dispense-card">
+                    <div class="dispense-title">Êtes-vous dispensé d'EPS ?</div>
+                    <div class="dispense-btns">
+                        <button class="dispense-btn active" id="btnNonDispense">Non</button>
+                        <button class="dispense-btn" id="btnOuiDispense">Oui</button>
+                    </div>
+                </div>
+                <button class="calc-btn" onclick="validerConfig()">Continuer ➜</button>
+            </div>
+            
+            <div class="tab-content" id="notes-tab">
+                <div class="section-header">📖 Matières Générales</div>
+                <div id="matieres-generales"></div>
+                
+                <div class="section-header" id="tech-header" style="display: none;">🔧 Matières Techniques</div>
+                <div id="matieres-techniques"></div>
+                
+                <button class="calc-btn" onclick="calculerMoyenne()">Calculer ma moyenne 🎯</button>
+            </div>
+            
+            <div class="tab-content" id="results-tab">
+                <div class="results-card" id="results">
+                    <div style="text-align: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #2a2a2a;">
+                        <div style="color: #10b981; font-size: 18px; font-weight: bold;" id="studentInfo">-- --</div>
+                        <div style="color: #888; font-size: 14px; margin-top: 5px;" id="classeInfo">--</div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <span class="result-label">Moyenne Générale</span>
+                        <span class="result-value" id="moyenneGenerale">--</span>
+                    </div>
+                    <div class="result-item" id="moyenneTechRow" style="display: none;">
+                        <span class="result-label">Moyenne Technique</span>
+                        <span class="result-value" id="moyenneTechnique">--</span>
+                    </div>
+                    <div class="moyenne-finale">
+                        <div style="font-size: 14px; opacity: 0.9; margin-bottom: 5px;">Moyenne Finale</div>
+                        <div><span id="moyenneFinale">--</span>/20</div>
+                    </div>
+                    <div class="appreciation" id="appreciation"></div>
+                    
+                    <button class="calc-btn" onclick="imprimerResultats()" style="margin-top: 20px; background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); box-shadow: 0 4px 15px rgba(0,0,0,0.4);">
+                        🖨️ Imprimer le bulletin
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="app-footer">
+            Dev by <span class="footer-brand">JD Technology</span>
+        </div>
+    </div>
+    
+    <script src="script.js"></script> 
+</body>
+</html>
